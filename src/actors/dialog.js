@@ -1,50 +1,71 @@
 export default class Dialog {
   constructor(scene) {
+    this.scene = scene;
     this.dialogBox = scene.add.rectangle(500, 500, 700, 100, 0xff);
     this.textObject = scene.make.text({
       x: 180,
       y: 470,
       text: '',
-      // origin: { x: 0.5, y: 0.5 },
       style: {
         font: 'bold 14px Arial',
         fill: 'white',
-        wordWrap: { width: 640, useAdvancedWrap: true }
-      }
+        wordWrap: {width: 640, useAdvancedWrap: true},
+      },
     });
-    this.delay = 20
+    this.dialogBox.alpha = 0;
+    this.textObject.alpha = 0;
+    this.wordDelay = 20;
+    this.phraseDelay = 2000;
+    const keys = this.scene.input.keyboard.addKey('SPACE');
+    this.scene.input.keyboard.on('keyup_SPACE', () => {
+      this.skip = true;
+    });
   }
 
-  start(conversation) {
-    console.log(conversation);
+  write(conversation) {
     this.conversation = conversation || this.conversation;
-    if(Array.isArray(this.conversation) || Array.length){
-      let interaction = this.conversation.shift();
-      console.log(interaction);
-      let delay = interaction.delay ? interaction.delay : this.delay
-      this.textObject.text=''
-      this.printLetter(interaction.text,delay);
+    if (Array.isArray(this.conversation) && this.conversation.length) {
+      // make box Appear
+      this.appear = true;
+
+      const interaction = this.conversation.shift();
+      const delay = interaction.delay ? interaction.delay : this.wordDelay;
+      this.textObject.text = '';
+      console.log(`is skipping ${this.skip}`);
+      this.printLetter(interaction.text, delay);
+    } else {
+      // make box disappear
+      this.appear = false;
+      // clear
+      this.textObject.text = '';
     }
   }
-  printLetter(text, delay = this.delay, index = 0) {
+  printLetter(text, delay = this.wordDelay, index = 0) {
     this.textObject.text += text[index];
-    const newIndex = index + 1;
+    let newIndex = index + 1;
     if (this.skip) {
-      this.skip != this.skip;
+      this.skip = false;
       this.textObject.text = text;
+      newIndex = text.length;
     }
     if (text.length == newIndex) {
-      console.log('message end')
-      setTimeout(()=>{this.start()},1000);
+      setTimeout(() => {
+        this.write();
+      }, this.phraseDelay);
     }
     if (newIndex < text.length) {
       setTimeout(() => {
-        this.printLetter(text, delay,newIndex);
+        this.printLetter(text, delay, newIndex);
       }, delay);
     }
   }
-
   update() {
-
+    if (this.appear && this.textObject.alpha <= 1) {
+      this.dialogBox.alpha += 0.1;
+      this.textObject.alpha += 0.1;
+    } else if (!this.appear && this.textObject.alpha >= 0) {
+      this.dialogBox.alpha -= 0.1;
+      this.textObject.alpha -= 0.1;
+    }
   }
 }

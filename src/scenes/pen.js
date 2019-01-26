@@ -1,5 +1,4 @@
 import Phaser from 'phaser';
-import Dialog from '../actors/dialog';
 import Creature from '../actors/creatures/creature';
 import Red from '../actors/creatures/red';
 
@@ -9,8 +8,6 @@ export default class Pen extends Phaser.Scene {
   }
 
   create() {
-    const mainDialog = new Dialog(this);
-    mainDialog.start([{text:'buenas tardes'},{text:'como estas?'}]);
     this.creature = new Creature(this, 100, 100, 'ecksdee');
     this.red = new Creature(this, 200, 200, 'asdf');
     console.log(this);
