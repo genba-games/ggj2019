@@ -3,8 +3,8 @@ export default class Boot extends Phaser.Scene {
         super({key:'Boot'})
     }
     create() {
-        console.log("Boot calling menu")
+        console.log("Boot calling menu");
 
-        this.scene.start('Menu')
+        this.scene.start('Menu');
     }
 }
