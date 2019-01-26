@@ -8,26 +8,26 @@ export const State = Enum(
 );
 
 export default class Creature extends Actor {
-  constructor (scene, x, y, asset, 
-               {energy=100, 
-                energy_variance=20,
-                speed=200,
-                speed_variance=50,} = {}) {
+  constructor (scene, x, y, asset=0xffffff, 
+               energy=100, energy_variance=20, 
+               speed=200, speed_variance=50) {
     super(scene, x, y, asset);
-    scene.add.existing(this);
-
-    // this.setTintFull(0xff)
     
-    this.angle = 0;
-    this.radius = 100;
-    this.period = 3;
-    console.log(this)
+    this.pos_angle = 0;
+    this.energy = energy;
+    this.energy_variance = energy_variance;
+    this.speed = speed;
+    this.speed_variance = speed_variance;
+
+    // TODO Remove this!
+    this.setTintFill(asset)
+
+    scene.add.existing(this);
   }
 
-  // preUpdate(time, delta) {
-  //   super.preUpdate(time, delta);
-  //   this.angle += Math.PI*2 * delta / 1000 / this.period;
-  //   this.x = 100 + Math.cos(this.angle) * this.radius;
-  //   this.y = 250 + Math.sin(this.angle) * this.radius;
-  // }
+  preUpdate(time, delta) {
+    super.preUpdate(time, delta);
+
+
+  }
 }
