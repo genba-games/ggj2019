@@ -7,5 +7,8 @@ module.exports = {
             "jsx":true,
             "modules":true,
         }
+    },
+    "rules":{
+        "require-jsdoc":"off"
     }
 };
