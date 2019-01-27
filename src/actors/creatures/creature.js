@@ -61,7 +61,7 @@ export default class Creature extends Actor {
   }
 
   setStateIdle() {
-    console.log('IDLE');
+    console.log('IDLE', this);
     this.state = State.IDLE;
     this.energy = 0;
     this.setEnergyRate();
@@ -80,14 +80,14 @@ export default class Creature extends Actor {
     console.log('EATING');
     this.state = State.EAT;
     this.setAnimation();
-    setTimeout(this.setStateIdle, this.eatTime);
+    setTimeout(this.setStateIdle.bind(this), this.eatTime);
   }
 
   setStateSleep() {
     console.log('SLEEPING');
     this.state = State.SLEEP;
     this.setAnimation();
-    setTimeout(this.setStateIdle, this.sleepTime);
+    setTimeout(this.setStateIdle.bind(this), this.sleepTime);
   }
 
   moveCalcDuration() {
