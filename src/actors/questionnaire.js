@@ -4,7 +4,7 @@ export default class Questionnaire {
     this.questions = questions;
     this.scene = scene;
     this.mainDialog = new Dialog(this.scene, 600, 700);
-    this.response = [];
+    this.responses = [];
     this.buttons = {};
     this.buttons.left = this.scene.make.text({
       x: 400,
@@ -40,7 +40,7 @@ export default class Questionnaire {
   */
   startSurvey() {
     if (this.questions.length==0) {
-      localStorage.setItem('creature', this.response);
+      this.pickCreature();
       this.scene.scene.start('Pen');
       return;
     }
@@ -57,7 +57,7 @@ export default class Questionnaire {
   }
 
   killButtons(button) {
-    this.response.push(button.text);
+    this.responses.push(button.text);
     this.buttons.left.text = '';
     this.buttons.right.text = '';
     this.buttons.left.alpha = 0;
@@ -71,6 +71,47 @@ export default class Questionnaire {
     this.buttons.left.on('pointerup', ()=> this.killButtons(this.buttons.left));
     // eslint-disable-next-line max-len
     this.buttons.right.on('pointerup', ()=> this.killButtons(this.buttons.right));
+  }
+  pickCreature() {
+    // Sorry for this
+    const creatures = {
+      bunny: 0,
+      robot: 0,
+      orange: 0,
+      ghost: 0,
+    };
+    if (this.responses[0] == 'Wet socks') {
+      creatures.bunny +=1;
+      creatures.orange+=1;
+    } else if (this.responses[0] == 'Sweaty clothes') {
+      creatures.robot +=1;
+      creatures.ghost+=1;
+    }
+    if (this.responses[1] == 'Frozen food') {
+      creatures.robot+=1;
+      creatures.orange+=1;
+    }
+    if (this.responses[2] == 'A good book') {
+      creatures.orange+=1;
+      creatures.bunny+=1;
+    } else if (this.response[2] == 'Evade taxes') {
+      creatures.robot+=2;
+    }
+    if (this.responses[3] == 'Instant noodles') {
+      creatures.ghost+=1;
+    }
+    if (this.responses[4] == 'Apples') {
+      creatures.bunny+=1;
+      creatures.robot+=1;
+      creatures.ghost+=1;
+    } else if (this.responses[4]=='Oranges') {
+      creatures.orange +=2;
+    }
+    const values = Object.values(creatures);
+    const i = values.indexOf(Math.max(...values));
+    const names = Object.keys(creatures);
+    const creaturePicked = names[i];
+    localStorage.setItem('creature', creaturePicked);
   }
   update() {
     this.mainDialog.update();

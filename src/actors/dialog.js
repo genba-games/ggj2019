@@ -2,8 +2,8 @@ export default class Dialog {
   constructor(scene, rx=500, ry=500) {
     this.scene = scene;
 
-    this.dialogBox = scene.add.rectangle(rx, ry, 700, 100, 0xff);
-    this.textObject = scene.make.text({
+    this.dialogBox = this.scene.add.rectangle(rx, ry, 700, 100, 0xff);
+    this.textObject = this.scene.make.text({
       x: 280,
       y: 670,
       text: '',

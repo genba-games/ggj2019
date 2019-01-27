@@ -5,6 +5,11 @@ export default class Menu extends Phaser.Scene {
   }
 
   create() {
+    if (localStorage.getItem('creature')) {
+      console.log('Menu calling pen');
+      console.log(localStorage.getItem('creature'));
+      this.scene.start('Pen');
+    }
     const questions = [{
       dialog: [{text: 'Whats worse?'}],
       options: ['Wet socks', 'Sweaty clothes'],
@@ -27,10 +32,6 @@ export default class Menu extends Phaser.Scene {
     }];
     this.que = new Questionnaire(this, questions);
     this.que.startSurvey();
-    if (localStorage.getItem('creature')) {
-      console.log('Menu calling pen');
-      // this.scene.start('Pen');
-    }
   }
   update() {
     this.que.update();
