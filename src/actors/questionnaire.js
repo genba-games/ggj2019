@@ -57,7 +57,6 @@ export default class Questionnaire {
   }
 
   killButtons(button) {
-    console.log('killButton called');
     this.response.push(button.text);
     this.buttons.left.text = '';
     this.buttons.right.text = '';

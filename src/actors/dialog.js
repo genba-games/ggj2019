@@ -30,7 +30,6 @@ export default class Dialog {
       this.appear = true;
 
       const interaction = this.conversation.shift();
-      console.log(interaction);
       const delay = interaction.delay ? interaction.delay : this.wordDelay;
       this.textObject.text = '';
       this.printLetter(interaction.text, delay);
