@@ -31,13 +31,13 @@ export default class Questionnaire {
     this.setButtons();
   }
   /*
-  object example
-  [{
-    dialog:[{text: 'Whats worse?'},
-    {text: 'Wet socks or sweaty clothes?'}],
-    options:['wet socks','sweaty clothes']
-  },{...}...]
-*/
+    object example
+    [{
+      dialog:[{text: 'Whats worse?'},
+      {text: 'Wet socks or sweaty clothes?'}],
+      options:['wet socks','sweaty clothes']
+    },{...}...]
+  */
   startSurvey() {
     if (this.questions.length==0) {
       localStorage.setItem('creature', this.response);
