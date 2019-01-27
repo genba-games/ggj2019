@@ -13,9 +13,6 @@ export default class Creature extends Actor {
                movementBase=80, movementVariance=30,
                speedBase=80, speedVariance=20) {
     super(scene, x, y, asset);
-
-    // TODO Remove this!
-    this.setTintFill(asset)
     
     // Creature properties
     //  Energy
@@ -73,14 +70,14 @@ export default class Creature extends Actor {
     const deltaY = Math.sin(angle) * distance;
 
     let x = this.x + deltaX;
-    if (x - this.width / 2 < 0) x -= 2 * deltaX;
+    if (x - this.width / 2 < 300) x -= 2 * deltaX;
     else if (x + this.width / 2 > this.scene.width) x -= 2 * deltaX;
 
     let y = this.y + deltaY;
     if (y - this.height / 2 < 0) y -= 2 * deltaY;
     else if (y + this.height / 2 > this.scene.height) y -= 2 * deltaY;
 
-    console.log('Moving to', x, ',', y);
+    // console.log('Moving to', x, ',', y);
 
     this.scene.add.tween({ 
       targets: this,
