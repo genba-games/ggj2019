@@ -33,7 +33,6 @@ export default class Pen extends Phaser.Scene {
     this.leftMenuContainer = this.add.container(150, 0,
         [basePanel, name, this.statusBarContainer]);
 
-    // this.creature = new Creature(this, 750, 450);
     this.orange = new Orange(this, 750, 450);
     this.bunny = new Bunny(this, 800, 450);
     this.robot = new Robot(this, 777, 200);

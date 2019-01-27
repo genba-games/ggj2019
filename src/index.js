@@ -10,7 +10,7 @@ const config = {
   parent: 'play',
   width: 1200,
   height: 900,
-  scene: [Boot, Menu, Pen, ...minigames],
+  scene: [Boot, Pen, ...minigames],
 };
 console.log('Config game');
 
