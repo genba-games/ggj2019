@@ -15,6 +15,8 @@ export default class Creature extends Actor {
                speedBase=80, speedVariance=20,
                moveChance=0.85, eatChance=0.1) {
     super(scene, x, y, asset);
+
+    this.asset = asset;
     
     // Creature properties
     //  Energy
@@ -28,22 +30,20 @@ export default class Creature extends Actor {
     this.speedVariance = speedVariance;
 
     // State
+    this.state = State.IDLE;
+    this.energy = 0;
+    this.setEnergyRate();
     //  State times
     this.idleTime = 100;
     this.moveTime = 100;
     this.eatTime = 800;
     this.sleepTime = 3000;
     //  State chances
-    if (moveChange + eatChance + sleepChance != 1) console.error(
-      'Creature state chances must add to 1.'
-    )
     this.stateChances = [
       moveChance + eatChance,
       moveChance,
       0, 
     ];
-    //  Set initial state
-    this.setStateIdle();
 
     scene.add.existing(this);
   }
@@ -61,28 +61,33 @@ export default class Creature extends Actor {
   }
 
   setStateIdle() {
+    console.log('IDLE');
     this.state = State.IDLE;
     this.energy = 0;
     this.setEnergyRate();
+    this.setAnimation();
   }
 
   setStateMove() {
     console.log('MOVING');
     this.state = State.MOVE;
     this.setSpeedRate();
+    this.setAnimation();
     this.moveStartTween();
   }
 
   setStateEat() {
     console.log('EATING');
     this.state = State.EAT;
-    setTimeout(() => {this.setStateIdle()}, this.eatTime);
+    this.setAnimation();
+    setTimeout(this.setStateIdle, this.eatTime);
   }
 
   setStateSleep() {
-    console.log('MOVING');
+    console.log('SLEEPING');
     this.state = State.SLEEP;
-    setTimeout(() => {this.setStateIdle()}, this.sleepTime);
+    this.setAnimation();
+    setTimeout(this.setStateIdle, this.sleepTime);
   }
 
   moveCalcDuration() {
@@ -113,14 +118,25 @@ export default class Creature extends Actor {
     });
   }
 
+  setAnimation() {
+    if (this.state == State.MOVE) this.anims.play(`walk${this.asset}`, false);
+    else if (this.state == State.EAT) this.anims.play(`eat${this.asset}`, false);
+    else if (this.state == State.SLEEP) this.anims.play(`sleep${this.asset}`, false);
+    else this.anims.play(`idle${this.asset}`, false);
+  }
+
   setNextState() {
     const action = Math.random();
     // Sleep
-    if (this.stateChances[2] <= action) this.setStateSleep();
+    if (this.stateChances[0] <= action) this.setStateSleep();
     // Eat
     else if (this.stateChances[1] <= action) this.setStateEat();
     // Move
-    else if (this.stateChances[0] <= action) this.setStateMove();
+    else if (this.stateChances[2] <= action) this.setStateMove();
+  }
+
+  create() {
+    console.log('TEST');
   }
 
   preUpdate(time, delta) {
