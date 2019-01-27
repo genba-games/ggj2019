@@ -1,10 +1,11 @@
 export default class Dialog {
-  constructor(scene) {
+  constructor(scene, rx=500, ry=500) {
     this.scene = scene;
-    this.dialogBox = scene.add.rectangle(500, 500, 700, 100, 0xff);
+
+    this.dialogBox = scene.add.rectangle(rx, ry, 700, 100, 0xff);
     this.textObject = scene.make.text({
-      x: 180,
-      y: 470,
+      x: 280,
+      y: 670,
       text: '',
       style: {
         font: 'bold 14px Arial',
@@ -29,15 +30,11 @@ export default class Dialog {
       this.appear = true;
 
       const interaction = this.conversation.shift();
+      console.log(interaction);
       const delay = interaction.delay ? interaction.delay : this.wordDelay;
       this.textObject.text = '';
-      console.log(`is skipping ${this.skip}`);
       this.printLetter(interaction.text, delay);
     } else {
-      // make box disappear
-      this.appear = false;
-      // clear
-      this.textObject.text = '';
     }
   }
   printLetter(text, delay = this.wordDelay, index = 0) {
@@ -67,5 +64,11 @@ export default class Dialog {
       this.dialogBox.alpha -= 0.1;
       this.textObject.alpha -= 0.1;
     }
+  }
+  disappear() {
+    // make box disappear
+    this.appear = false;
+    // clear
+    this.textObject.text = '';
   }
 }

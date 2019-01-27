@@ -1,21 +1,38 @@
-import Dialog from '../actors/dialog';
-
+import Questionnaire from '../actors/questionnaire';
 export default class Menu extends Phaser.Scene {
   constructor() {
     super({key: 'Menu'});
   }
 
   create() {
-    this.mainDialog = new Dialog(this);
-    this.mainDialog.write([{text: 'Whats worse?'},
-      {text: 'Wet socks or sweaty clothes?'}]);
-    localStorage.setItem('creature', 'previousCreatureData');
+    const questions = [{
+      dialog: [{text: 'Whats worse?'}],
+      options: ['Wet socks', 'Sweaty clothes'],
+    },
+    {
+      dialog: [{text: 'What would you prefer?'}],
+      options: ['Frozen food', 'Boiling food'],
+    },
+    {
+      dialog: [{text: 'Which would you prefer?'}],
+      options: ['A good book', 'Evade taxes'],
+    },
+    {
+      dialog: [{text: 'What would you rather cook?'}],
+      options: ['Instant noodles', 'Spaghetti'],
+    },
+    {
+      dialog: [{text: 'What is more pleasent?'}],
+      options: ['Apples', 'Oranges'],
+    }];
+    this.que = new Questionnaire(this, questions);
+    this.que.startSurvey();
     if (localStorage.getItem('creature')) {
       console.log('Menu calling pen');
-      this.scene.start('Pen');
+      // this.scene.start('Pen');
     }
   }
   update() {
-    this.mainDialog.update();
+    this.que.update();
   }
 }
