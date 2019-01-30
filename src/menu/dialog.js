@@ -1,5 +1,6 @@
-export default class Dialog {
+export default class Dialog extends Phaser.GameObjects.GameObject {
   constructor(scene, rx=500, ry=500) {
+    super(scene, 'dialog');
     this.scene = scene;
 
     this.dialogBox = this.scene.add.rectangle(rx, ry, 700, 100, 0xff);
@@ -17,7 +18,7 @@ export default class Dialog {
     this.textObject.alpha = 0;
     this.wordDelay = 20;
     this.phraseDelay = 2000;
-    const keys = this.scene.input.keyboard.addKey('SPACE');
+    this.scene.input.keyboard.addKey('SPACE');
     this.scene.input.keyboard.on('keyup_SPACE', () => {
       this.skip = true;
     });

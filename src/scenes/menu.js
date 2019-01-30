@@ -1,4 +1,4 @@
-import Questionnaire from '../actors/questionnaire';
+import Questionnaire from '../menu/questionnaire';
 export default class Menu extends Phaser.Scene {
   constructor() {
     super({key: 'Menu'});

@@ -1,6 +1,7 @@
-import Dialog from '../actors/dialog';
-export default class Questionnaire {
+import Dialog from './dialog';
+export default class Questionnaire extends Phaser.GameObjects.GameObject {
   constructor(scene, questions) {
+    super(scene, 'questionnaire');
     this.questions = questions;
     this.scene = scene;
     this.mainDialog = new Dialog(this.scene, 600, 700);
@@ -94,7 +95,7 @@ export default class Questionnaire {
     if (this.responses[2] == 'A good book') {
       creatures.orange+=1;
       creatures.bunny+=1;
-    } else if (this.response[2] == 'Evade taxes') {
+    } else if (this.responses[2] == 'Evade taxes') {
       creatures.robot+=2;
     }
     if (this.responses[3] == 'Instant noodles') {
